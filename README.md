@@ -23,7 +23,7 @@ The goal of this project was to automate that process.
 
 ## Workflow
 
-![n8n Attachment Organizer](workflow.png)
+![n8n Attachment Organizer](email%20attachment%20n8n%20workflow.PNG)
 
 ## Tech Stack
 
