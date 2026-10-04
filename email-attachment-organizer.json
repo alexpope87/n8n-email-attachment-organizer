@@ -135,10 +135,10 @@
         },
         "folderId": {
           "__rl": true,
-          "value": "YOUR_PDF_FOLDER_ID"
+          "value": "YOUR_PDF_FOLDER_ID",
           "mode": "list",
           "cachedResultName": "pdf",
-          "cachedResultUrl":"YOUR_PDF_FOLDER_URL""
+          "cachedResultUrl":"YOUR_PDF_FOLDER_URL"
         },
         "options": {}
       },
