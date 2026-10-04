@@ -1,0 +1,279 @@
+{
+  "name": "Email Attachment Organizer",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "q": ""
+        },
+        "options": {
+          "dataPropertyAttachmentsPrefixName": "attachment_",
+          "downloadAttachments": true
+        }
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9cf144db-9927-4142-8352-5ac5ca401a73",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zrCy4NgO07JKtBEA",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{\n  $binary.attachment_0.fileExtension.toLowerCase() === 'pdf'\n    ? 'pdf'\n    : ['jpg', 'jpeg', 'png'].includes($binary.attachment_0.fileExtension.toLowerCase())\n      ? 'image'\n      : ['xls', 'xlsx', 'csv'].includes($binary.attachment_0.fileExtension.toLowerCase())\n        ? 'spreadsheet'\n        : 'other'\n}}",
+                    "rightValue": "pdf",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "fd6eb7d5-47c6-40bc-8876-c0f67cacaaef"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "pdf"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "2369d2bf-45b6-4482-bfc9-bcea26e0419f",
+                    "leftValue": "={{ $binary.attachment_0.mimeType }}",
+                    "rightValue": "image/",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "images"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "9bbfdfde-9443-4970-b394-3f08f5ba6e61",
+                    "leftValue": "={{    $binary.attachment_0.fileExtension.toLowerCase() === 'pdf'     ? 'pdf'     : ['jpg','jpeg','png'].includes($binary.attachment_0.fileExtension.toLowerCase())       ? 'image'       : ['xls','xlsx','csv'].includes($binary.attachment_0.fileExtension.toLowerCase())         ? 'spreadsheet'         : 'other' }}",
+                    "rightValue": "spreadsheet",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "spreadsheets"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "acdb5281-c6b6-4131-82bc-57c1744bc83b",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "attachment_0",
+        "name": "={{ $binary.attachment_0.fileName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1Ob9kJVA2yTyGkrIypfbhaHQ8zWjdSQ4c",
+          "mode": "list",
+          "cachedResultName": "pdf",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1Ob9kJVA2yTyGkrIypfbhaHQ8zWjdSQ4c"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        464,
+        -160
+      ],
+      "id": "852dcfde-9441-46dc-bcb3-1b2cda27bead",
+      "name": "Upload file PDF",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "fXCSeIXWc0bSexoN",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "attachment_0",
+        "name": "={{ $binary.attachment_0.fileName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1_XMvTrMIhK6DeamsXEpsQBsr8FGycHXv",
+          "mode": "list",
+          "cachedResultName": "images",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1_XMvTrMIhK6DeamsXEpsQBsr8FGycHXv"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        480,
+        32
+      ],
+      "id": "7b2159f2-f892-4680-89b1-5eb064c4927c",
+      "name": "Upload file Images",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "fXCSeIXWc0bSexoN",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "attachment_0",
+        "name": "={{ $binary.attachment_0.fileName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1V90K2nGwqXtHPmLg8XkJwZoFUOFZgXGM",
+          "mode": "list",
+          "cachedResultName": "spreadsheet",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1V90K2nGwqXtHPmLg8XkJwZoFUOFZgXGM"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        480,
+        208
+      ],
+      "id": "10a3fd0b-28b9-414f-b82f-4e8f0c2dcbc3",
+      "name": "Upload file Spreadsheet",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "fXCSeIXWc0bSexoN",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Upload file PDF",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Upload file Images",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Upload file Spreadsheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "bb9bfe9e-5033-42dc-8bee-9133af1172ed",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c80684caaf4ad284acde007346c1230969d433c0fdf94f65066ccea54d4c69ee"
+  },
+  "nodeGroups": [],
+  "id": "Sike7g85bmOzW6r4",
+  "tags": []
+}
