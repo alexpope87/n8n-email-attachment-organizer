@@ -135,10 +135,10 @@
         },
         "folderId": {
           "__rl": true,
-          "value": "1Ob9kJVA2yTyGkrIypfbhaHQ8zWjdSQ4c",
+          "value": "YOUR_PDF_FOLDER_ID"
           "mode": "list",
           "cachedResultName": "pdf",
-          "cachedResultUrl": "https://drive.google.com/drive/folders/1Ob9kJVA2yTyGkrIypfbhaHQ8zWjdSQ4c"
+          "cachedResultUrl":"YOUR_PDF_FOLDER_URL""
         },
         "options": {}
       },
@@ -168,10 +168,10 @@
         },
         "folderId": {
           "__rl": true,
-          "value": "1_XMvTrMIhK6DeamsXEpsQBsr8FGycHXv",
+          "value": "YOUR_IMAGE_FOLDER_ID",
           "mode": "list",
           "cachedResultName": "images",
-          "cachedResultUrl": "https://drive.google.com/drive/folders/1_XMvTrMIhK6DeamsXEpsQBsr8FGycHXv"
+          "cachedResultUrl": "YOUR_IMAGE_FOLDER_ID"
         },
         "options": {}
       },
@@ -201,10 +201,10 @@
         },
         "folderId": {
           "__rl": true,
-          "value": "1V90K2nGwqXtHPmLg8XkJwZoFUOFZgXGM",
+          "value": "YOUR_SPREADSHEET_FOLDER_ID",
           "mode": "list",
           "cachedResultName": "spreadsheet",
-          "cachedResultUrl": "https://drive.google.com/drive/folders/1V90K2nGwqXtHPmLg8XkJwZoFUOFZgXGM"
+          "cachedResultUrl": "YOUR_SPREADSHEET_FOLDER_ID"
         },
         "options": {}
       },
